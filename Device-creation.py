@@ -5,16 +5,16 @@ import urllib3
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-BaseUrl = "https://netenrich.opsramp.com/"
-OpsRampSecret = 'c55PPRzMPg3BWp5tXZMwwT8Gzpq6GmUbBwWnAfdhJZjmVHfXB59ZMM5rZY3kA5wf'
-OpsRampKey = 'cHrCgP3TWVtv3EwMzah3hfjH34eXUHM8'
+BaseUrl = ""
+Secret = ''
+Key = ''
 
 def create_resource(data):
     token_url = BaseUrl + "auth/oauth/token"
     auth_data = {
-        'client_secret': OpsRampSecret,
+        'client_secret': Secret,
         'grant_type': 'client_credentials',
-        'client_id': OpsRampKey
+        'client_id': Key
     }
     headers = {'Content-Type': 'application/x-www-form-urlencoded'}
     token_response = requests.post(token_url, data=auth_data, headers=headers, verify=True)
@@ -23,7 +23,7 @@ def create_resource(data):
         access_token = token_response.json().get('access_token')
         if access_token:
             auth_header = {'Authorization': 'Bearer ' + access_token, 'Content-Type': 'application/json'}
-            api_endpoint = f'https://netenrich.opsramp.com/api/v2/tenants/{data["Client_ID"]}/resources'
+            api_endpoint = f'https://{BaseUrl}/api/v2/tenants/{data["Client_ID"]}/resources'
 
             payload = {
                 "hostName": data['hostName'],
@@ -49,7 +49,7 @@ def create_resource(data):
         print("Error message:", token_response.text)
 
 # Read input data from Excel file
-input_file = 'C:\\Users\\hari.boddu\\Downloads\\resource_creation.xlsx'  # Update with your file path
+input_file = ''  # Update with your file path
 df = pd.read_excel(input_file)
 
 # Get the 'Client_ID' from the user as input
