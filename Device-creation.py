@@ -48,7 +48,6 @@ def create_resource(data):
         print(f"Failed to obtain access token. Status code: {token_response.status_code}")
         print("Error message:", token_response.text)
 
-# Read input data from Excel file
 input_file = ''  # Update with your file path
 df = pd.read_excel(input_file)
 
